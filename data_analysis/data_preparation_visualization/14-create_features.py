@@ -11,12 +11,12 @@ def create_features(df):
         'StreamingMovies'
     ]
 
-    # count 'Yes' across service columns
+    # count 'Yes' across telecom service labels
     df['NumServices'] = (df[service_cols] == 'Yes').sum(axis=1)
-    # add internet subscription (DSL or Fiber optic count as subscribed)
+    # add internet subscription
     df['NumServices'] += (df['InternetService'] != 'No').astype(int)
 
-    # bin tenure: 0 excluded, upper bounds inclusive
+    # bin limits: 0 excluded, upper bounds included
     df['TenureGroup'] = pd.cut(
         df['tenure'],
         bins=[0, 12, 24, 48, 60, float('inf')],
