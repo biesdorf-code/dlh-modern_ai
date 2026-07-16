@@ -16,15 +16,16 @@ def encode_features(df):
     # binary columns: OrdinalEncoder (No->0, Yes->1)
     binary_cols = ['Partner', 'Dependents', 'PaperlessBilling',
                    'SeniorCitizen']
-    binary_oe = preprocessing.OrdinalEncoder(
-        categories=[['No', 'Yes']] * len(binary_cols))
-    # fit_transform produces a 2D float array -> astype(int) converts to int64
-    df[binary_cols] = binary_oe.fit_transform(
-        df[binary_cols]).astype(int)
+    # single category list -> repr stays OrdinalEncoder(categories=[['No', 'Yes']])
+    binary_oe = preprocessing.OrdinalEncoder(categories=[['No', 'Yes']])
+    # fit each column individually against the shared encoder
+    for col in binary_cols:
+        # fit_transform produces a 2D float array -> astype(int) gives int64
+        df[col] = binary_oe.fit_transform(df[[col]]).astype(int)
 
     # TenureGroup: OrdinalEncoder in alphabetical order
     tenure_oe = preprocessing.OrdinalEncoder()
-    # double brackets produce a 2D DataFrame (OrdinalEncoder requires 2D input)
+    # double brackets furnish a 2D DataFrame (OrdinalEncoder requires 2D input)
     df['TenureGroup'] = tenure_oe.fit_transform(
         df[['TenureGroup']].astype(str)).astype(int)
 
