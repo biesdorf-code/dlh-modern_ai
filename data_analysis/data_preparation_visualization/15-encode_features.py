@@ -16,7 +16,7 @@ def encode_features(df):
     # binary columns: OrdinalEncoder (No->0, Yes->1)
     binary_cols = ['Partner', 'Dependents', 'PaperlessBilling',
                    'SeniorCitizen']
-    # single category list -> repr stays OrdinalEncoder(categories=[['No', 'Yes']])
+
     binary_oe = preprocessing.OrdinalEncoder(categories=[['No', 'Yes']])
     # fit each column individually against the shared encoder
     for col in binary_cols:
@@ -25,12 +25,12 @@ def encode_features(df):
 
     # TenureGroup: OrdinalEncoder in alphabetical order
     tenure_oe = preprocessing.OrdinalEncoder()
-    # double brackets furnish a 2D DataFrame (OrdinalEncoder requires 2D input)
+    # double brackets creates a 2D DataFrame (OrdinalEncoder requires 2D input)
     df['TenureGroup'] = tenure_oe.fit_transform(
         df[['TenureGroup']].astype(str)).astype(int)
 
     # Contract, PaymentMethod: one-hot with drop_first
-    # get_dummies furnishes a new DataFrame with the dummy columns appended
+    # get_dummies returns a new DataFrame with the dummy columns appended
     df = pd.get_dummies(
         df, columns=['Contract', 'PaymentMethod'],
         drop_first=True, dtype=int)
