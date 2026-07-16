@@ -1,4 +1,4 @@
-^#!/usr/bin/env python3
+#!/usr/bin/env python3
 """ module for scaling numeric features """
 from sklearn import preprocessing
 
