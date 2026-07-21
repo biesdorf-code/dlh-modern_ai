@@ -18,7 +18,7 @@ def prune_and_evaluate_trees(X_train, y_train, X_test, y_test, ccp_alphas,
             random_state=random_state,
             min_samples_leaf=min_samples_leaf,
             min_samples_split=min_samples_split,
-            ccp_alpha=ccp_alphagot
+            ccp_alpha=ccp_alpha
         )
         train_tree(clf, X_train, y_train)
         clfs.append(clf)
