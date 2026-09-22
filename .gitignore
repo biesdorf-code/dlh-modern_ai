@@ -4,3 +4,6 @@ __pycache__/
 *.rar
 *.csv
 
+101_ObjectCategories/
+*.zip
+*.tar.gz
